@@ -8,22 +8,16 @@ using System.Linq;
 
 namespace Projeto.Infrastructure.Repository
 {
-    public  class DapperRepository : IDisposable
+    public static class DapperRepository
     {
 
-        private readonly SqlConnection minhaConexao;
-
-        public DapperRepository()
-        {
-            minhaConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            minhaConexao.Open();
-        }
+        private static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
         //Execute Without Return
-        public  void ExecuteSemRetorno(string procedureName, DynamicParameters param = null)
+        public static void ExecuteSemRetorno(string procedureName, DynamicParameters param = null)
         {
-            using (SqlConnection sqlCon = new SqlConnection(minhaConexao.ToString()))
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
                 sqlCon.Execute(procedureName, param, commandType: CommandType.StoredProcedure);
@@ -31,9 +25,9 @@ namespace Projeto.Infrastructure.Repository
         }
 
         //Execute Return Scalar DapperORM.ExecuteComRetorno<int>(_,_)
-        public  T ExecuteComRetorno<T>(string procedureName, DynamicParameters param = null)
+        public static T ExecuteComRetorno<T>(string procedureName, DynamicParameters param = null)
         {
-            using (SqlConnection sqlCon = new SqlConnection(minhaConexao.ToString()))
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
                 return (T)Convert.ChangeType(sqlCon.ExecuteScalar(procedureName, param, commandType:
@@ -43,9 +37,9 @@ namespace Projeto.Infrastructure.Repository
         }
 
         //Executa uma consulta sql pura para 1 registro
-        public  T ExecuteSqlPuroComRetorno<T>(string consultaSql)
+        public static T ExecuteSqlPuroComRetorno<T>(string consultaSql)
         {
-            using (SqlConnection sqlCon = new SqlConnection(minhaConexao.ToString()))
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
                 var sql = string.Format(consultaSql);
@@ -55,19 +49,15 @@ namespace Projeto.Infrastructure.Repository
 
 
         //Execute Return List DapperORM.RetornoList<EmployeeModel> <=
-        public  IEnumerable<T> RetornoList<T>(string procedureName, DynamicParameters param = null)
+        public static IEnumerable<T> RetornoList<T>(string procedureName, DynamicParameters param = null)
         {
-            using (SqlConnection sqlCon = new SqlConnection(minhaConexao.ToString()))
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
                 return sqlCon.Query<T>(procedureName, param, commandType: CommandType.StoredProcedure);
             }
         }
 
-        public void Dispose()
-        {
-            if (minhaConexao.State == ConnectionState.Open)
-                minhaConexao.Close();
-        }
+
     }
 }
