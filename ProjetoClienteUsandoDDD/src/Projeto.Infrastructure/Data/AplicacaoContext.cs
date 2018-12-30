@@ -18,6 +18,7 @@ namespace Projeto.Infrastructure.Data
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Profissao> Profissoes { get; set; }
         public DbSet<ProfissaoCliente> ProfissoesCliente { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,12 +27,14 @@ namespace Projeto.Infrastructure.Data
             modelBuilder.Entity<Endereco>().ToTable("TB_ENDERECO");
             modelBuilder.Entity<Profissao>().ToTable("TB_PROFISSAO");
             modelBuilder.Entity<ProfissaoCliente>().ToTable("TB_PROFISSAO_CLIENTE");
+            modelBuilder.Entity<Menu>().ToTable("TB_MENU");
 
             modelBuilder.ApplyConfiguration(new ClienteMap());
             modelBuilder.ApplyConfiguration(new ContatoMap());
             modelBuilder.ApplyConfiguration(new ProfissaoMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
             modelBuilder.ApplyConfiguration(new ProfissaoClienteMap());
+            modelBuilder.ApplyConfiguration(new MenuMap());
 
         }
 

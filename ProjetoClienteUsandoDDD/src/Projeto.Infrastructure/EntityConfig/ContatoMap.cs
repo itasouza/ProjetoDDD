@@ -27,6 +27,12 @@ namespace Projeto.Infrastructure.EntityConfig
 
             builder.Property(e => e.Telefone)
                .HasColumnType("varchar(15)");
+
+            builder.Property(e => e.DataAlteracao)
+             .HasColumnType("datetime");
+
+            builder.Property(e => e.DataCadastro)
+             .HasColumnType("datetime");
         }
     }
 }

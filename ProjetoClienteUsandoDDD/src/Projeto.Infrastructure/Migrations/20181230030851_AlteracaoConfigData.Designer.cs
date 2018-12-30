@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projeto.Infrastructure.Data;
 
 namespace Projeto.Infrastructure.Migrations
 {
     [DbContext(typeof(AplicacaoContext))]
-    partial class AplicacaoContextModelSnapshot : ModelSnapshot
+    [Migration("20181230030851_AlteracaoConfigData")]
+    partial class AlteracaoConfigData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,23 +115,6 @@ namespace Projeto.Infrastructure.Migrations
                     b.ToTable("TB_ENDERECO");
                 });
 
-            modelBuilder.Entity("Projeto.ApplicationCore.Entity.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("MenuId");
-
-                    b.Property<string>("Titulo");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuId");
-
-                    b.ToTable("TB_MENU");
-                });
-
             modelBuilder.Entity("Projeto.ApplicationCore.Entity.Profissao", b =>
                 {
                     b.Property<int>("ProfissaoId")
@@ -192,13 +177,6 @@ namespace Projeto.Infrastructure.Migrations
                         .WithOne("Endereco")
                         .HasForeignKey("Projeto.ApplicationCore.Entity.Endereco", "ClienteId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Projeto.ApplicationCore.Entity.Menu", b =>
-                {
-                    b.HasOne("Projeto.ApplicationCore.Entity.Menu")
-                        .WithMany("SubMenu")
-                        .HasForeignKey("MenuId");
                 });
 
             modelBuilder.Entity("Projeto.ApplicationCore.Entity.ProfissaoCliente", b =>

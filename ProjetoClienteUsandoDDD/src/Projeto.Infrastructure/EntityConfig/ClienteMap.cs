@@ -28,6 +28,12 @@ namespace Projeto.Infrastructure.EntityConfig
             builder.Property(e => e.Nome)
                .HasColumnType("varchar(200)")
                .IsRequired();
+
+            builder.Property(e => e.DataAlteracao)
+             .HasColumnType("datetime");
+
+            builder.Property(e => e.DataCadastro)
+             .HasColumnType("datetime");
         }
     }
 }

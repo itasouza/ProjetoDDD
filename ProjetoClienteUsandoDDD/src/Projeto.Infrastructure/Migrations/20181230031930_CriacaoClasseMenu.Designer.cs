@@ -10,8 +10,8 @@ using Projeto.Infrastructure.Data;
 namespace Projeto.Infrastructure.Migrations
 {
     [DbContext(typeof(AplicacaoContext))]
-    [Migration("20181230022959_AdicionadoDataCadastroAlteracao")]
-    partial class AdicionadoDataCadastroAlteracao
+    [Migration("20181230031930_CriacaoClasseMenu")]
+    partial class CriacaoClasseMenu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,9 +31,11 @@ namespace Projeto.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(11)");
 
-                    b.Property<DateTime>("DataAlteracao");
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DataCadastro");
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -52,9 +54,11 @@ namespace Projeto.Infrastructure.Migrations
 
                     b.Property<int>("ClienteId");
 
-                    b.Property<DateTime>("DataAlteracao");
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DataCadastro");
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -80,19 +84,28 @@ namespace Projeto.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bairro");
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
 
-                    b.Property<string>("CEP");
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("ClienteId");
 
-                    b.Property<DateTime>("DataAlteracao");
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DataCadastro");
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("Logradouro");
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Referencia");
+                    b.Property<string>("Referencia")
+                        .HasColumnType("varchar(400)");
 
                     b.HasKey("EnderecoId");
 
@@ -102,21 +115,46 @@ namespace Projeto.Infrastructure.Migrations
                     b.ToTable("TB_ENDERECO");
                 });
 
+            modelBuilder.Entity("Projeto.ApplicationCore.Entity.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MenuId");
+
+                    b.Property<string>("Titulo");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("TB_MENU");
+                });
+
             modelBuilder.Entity("Projeto.ApplicationCore.Entity.Profissao", b =>
                 {
                     b.Property<int>("ProfissaoId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CBO");
+                    b.Property<string>("CBO")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
-                    b.Property<DateTime>("DataAlteracao");
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DataCadastro");
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("Descricao");
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(400)");
 
                     b.HasKey("ProfissaoId");
 
@@ -147,7 +185,7 @@ namespace Projeto.Infrastructure.Migrations
                     b.HasOne("Projeto.ApplicationCore.Entity.Cliente", "Cliente")
                         .WithMany("Contatos")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Projeto.ApplicationCore.Entity.Endereco", b =>
@@ -158,17 +196,24 @@ namespace Projeto.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Projeto.ApplicationCore.Entity.Menu", b =>
+                {
+                    b.HasOne("Projeto.ApplicationCore.Entity.Menu")
+                        .WithMany("SubMenu")
+                        .HasForeignKey("MenuId");
+                });
+
             modelBuilder.Entity("Projeto.ApplicationCore.Entity.ProfissaoCliente", b =>
                 {
                     b.HasOne("Projeto.ApplicationCore.Entity.Cliente", "Cliente")
                         .WithMany("ProfissoesClientes")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Projeto.ApplicationCore.Entity.Profissao", "Profissao")
                         .WithMany("ProfissoesClientes")
                         .HasForeignKey("ProfissaoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

@@ -23,6 +23,8 @@ namespace Projeto.Infrastructure.EntityConfig
                 .WithMany(c => c.ProfissoesClientes)
                 .HasForeignKey(c => c.ProfissaoId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }

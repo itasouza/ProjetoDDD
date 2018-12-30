@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Projeto.Infrastructure.Migrations
@@ -14,7 +15,9 @@ namespace Projeto.Infrastructure.Migrations
                     ClienteId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(type: "varchar(200)", nullable: false),
-                    CPF = table.Column<string>(type: "varchar(11)", nullable: false)
+                    CPF = table.Column<string>(type: "varchar(11)", nullable: false),
+                    DataCadastro = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,9 +30,11 @@ namespace Projeto.Infrastructure.Migrations
                 {
                     ProfissaoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Descricao = table.Column<string>(nullable: true),
-                    CBO = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(type: "varchar(400)", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(1000)", nullable: false),
+                    CBO = table.Column<string>(type: "varchar(10)", nullable: false),
+                    DataCadastro = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,6 +50,8 @@ namespace Projeto.Infrastructure.Migrations
                     Nome = table.Column<string>(type: "varchar(200)", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(15)", nullable: true),
                     Email = table.Column<string>(type: "varchar(100)", nullable: false),
+                    DataCadastro = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -55,7 +62,7 @@ namespace Projeto.Infrastructure.Migrations
                         column: x => x.ClienteId,
                         principalTable: "TB_CLIENTE",
                         principalColumn: "ClienteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,10 +71,12 @@ namespace Projeto.Infrastructure.Migrations
                 {
                     EnderecoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Logradouro = table.Column<string>(nullable: true),
-                    Bairro = table.Column<string>(nullable: true),
-                    CEP = table.Column<string>(nullable: true),
-                    Referencia = table.Column<string>(nullable: true),
+                    Logradouro = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Bairro = table.Column<string>(type: "varchar(200)", nullable: false),
+                    CEP = table.Column<string>(type: "varchar(15)", nullable: false),
+                    Referencia = table.Column<string>(type: "varchar(400)", nullable: true),
+                    DataCadastro = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -98,13 +107,13 @@ namespace Projeto.Infrastructure.Migrations
                         column: x => x.ClienteId,
                         principalTable: "TB_CLIENTE",
                         principalColumn: "ClienteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_PROFISSAO_CLIENTE_TB_PROFISSAO_ProfissaoId",
                         column: x => x.ProfissaoId,
                         principalTable: "TB_PROFISSAO",
                         principalColumn: "ProfissaoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
