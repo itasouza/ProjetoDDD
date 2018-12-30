@@ -22,6 +22,7 @@ namespace Projeto.Infrastructure.Repository
 
         public virtual TEntity Adicionar(TEntity entity)
         {
+            
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
             return entity;
