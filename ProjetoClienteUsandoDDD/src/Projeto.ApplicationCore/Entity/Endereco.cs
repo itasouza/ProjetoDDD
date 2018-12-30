@@ -4,21 +4,21 @@ using System.Text;
 
 namespace Projeto.ApplicationCore.Entity
 {
-    public class Contato
+    public class Endereco
     {
-        public Contato()
+        public Endereco()
         {
 
         }
 
-        public int ContatoId { get; set; }
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public string Email { get; set; }
+        public int EnderecoId { get; set; }
+        public string Logradouro { get; set; }
+        public string Bairro { get; set; }
+        public string CEP { get; set; }
+        public string Referencia { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAlteracao { get; set; }
 
-        //um contato pertence a um cliente
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
     }

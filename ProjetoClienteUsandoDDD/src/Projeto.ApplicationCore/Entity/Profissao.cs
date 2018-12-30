@@ -4,21 +4,19 @@ using System.Text;
 
 namespace Projeto.ApplicationCore.Entity
 {
-   public class Cliente
+    public class Profissao
     {
-        public Cliente()
+        public Profissao()
         {
 
         }
 
-        public int ClienteId { get; set; }
+        public int ProfissaoId { get; set; }
         public string Nome { get; set; }
-        public string CPF { get; set; }
+        public string Descricao { get; set; }
+        public string CBO { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAlteracao { get; set; }
-        //um cliente tem vários contatos
-        public ICollection<Contato> Contatos { get; set; }
-        public Endereco Endereco  { get; set; }
         public ICollection<ProfissaoCliente> ProfissoesClientes { get; set; }
     }
 }
